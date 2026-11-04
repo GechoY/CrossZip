@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+    <key>CFBundleIdentifier</key><string>local.echo.CrossZip</string>
+    <key>CFBundleName</key><string>CrossZip</string>
+    <key>CFBundleDisplayName</key><string>CrossZip</string>
+    <key>CFBundleExecutable</key><string>CrossZip</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleShortVersionString</key><string>1.5.2</string>
+    <key>CFBundleVersion</key><string>10</string>
+    <key>CFBundleIconFile</key><string>CrossZip.icns</string>
+    <key>CFBundleDevelopmentRegion</key><string>zh_CN</string>
+    <key>CFBundleLocalizations</key><array><string>zh-Hans</string></array>
+    <key>LSMinimumSystemVersion</key><string>14.0</string>
+    <key>NSHighResolutionCapable</key><true/>
+    <key>NSPrincipalClass</key><string>NSApplication</string>
+    <key>NSServices</key><array><dict>
+        <key>NSMenuItem</key><dict><key>default</key><string>使用 CrossZip 压缩</string></dict>
+        <key>NSMessage</key><string>compressSelection</string>
+        <key>NSPortName</key><string>CrossZip</string>
+        <key>NSSendFileTypes</key><array><string>public.item</string></array>
+        <key>NSSendTypes</key><array><string>public.file-url</string><string>NSFilenamesPboardType</string></array>
+        <key>NSRequiredContext</key><dict>
+            <key>NSApplicationIdentifier</key><string>com.apple.finder</string>
+        </dict>
+        <key>NSServiceDescription</key><string>将 Finder 选中的文件或文件夹载入 CrossZip，原样保存为 ZIP、7z 或 TAR 等格式。</string>
+    </dict></array>
+    <key>NSDesktopFolderUsageDescription</key><string>读取你选择的桌面文件，或保存压缩与解压结果。</string>
+    <key>NSDocumentsFolderUsageDescription</key><string>读取你选择的文稿，或保存压缩与解压结果。</string>
+    <key>NSDownloadsFolderUsageDescription</key><string>读取你选择的下载文件，或保存压缩与解压结果。</string>
+    <key>NSRemovableVolumesUsageDescription</key><string>读取你选择的外置磁盘文件，或保存处理结果。</string>
+    <key>NSNetworkVolumesUsageDescription</key><string>读取你选择的网络磁盘文件，或保存处理结果。</string>
+    <key>CFBundleDocumentTypes</key><array><dict>
+        <key>CFBundleTypeName</key><string>ZIP 压缩包</string>
+        <key>CFBundleTypeRole</key><string>Viewer</string>
+        <key>LSHandlerRank</key><string>Alternate</string>
+        <key>LSItemContentTypes</key><array><string>public.zip-archive</string></array>
+        <key>CFBundleTypeExtensions</key><array><string>zip</string></array>
+    </dict><dict>
+        <key>CFBundleTypeName</key><string>压缩包与归档</string>
+        <key>CFBundleTypeRole</key><string>Viewer</string>
+        <key>LSHandlerRank</key><string>Alternate</string>
+        <key>CFBundleTypeExtensions</key><array>
+            <string>7z</string><string>rar</string><string>tar</string><string>gz</string>
+            <string>tgz</string><string>bz2</string><string>tbz</string><string>tbz2</string>
+            <string>xz</string><string>txz</string><string>lzma</string><string>lz</string><string>z</string>
+            <string>cab</string><string>cpio</string><string>iso</string><string>ar</string>
+        </array>
+    </dict></array>
+</dict></plist>

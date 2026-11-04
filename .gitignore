@@ -1,0 +1,12 @@
+.build/
+dist/
+.DS_Store
+.swiftpm/
+test-artifacts/
+Vendor/Native/
+.tools/
+.env
+.env.*
+*.xcuserstate
+__pycache__/
+*.pyc

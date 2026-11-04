@@ -1,0 +1,68 @@
+name: Build and verify
+
+on:
+  push:
+    branches: [main, 'codex/**']
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  macos:
+    runs-on: macos-15
+    timeout-minutes: 40
+    env:
+      CROSSZIP_LARGE_TESTS: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build and run Swift and independent-tool tests
+        run: bash scripts/check.sh
+      - name: Package app for download
+        run: bash scripts/package_release.sh
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: macos-app
+          path: dist/releases/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: windows-acceptance
+          path: dist/WindowsAcceptance/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: local-verification-reports
+          path: test-artifacts/*.json
+          if-no-files-found: ignore
+
+  windows:
+    needs: macos
+    runs-on: windows-2025
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: windows-acceptance
+          path: acceptance
+      - name: Extract with Windows PowerShell and verify names and SHA-256
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          foreach ($scenario in @('acceptance', 'acceptance/MultipleFiles')) {
+            $out = Join-Path (Resolve-Path $scenario).Path 'extracted'
+            Expand-Archive -LiteralPath (Join-Path $scenario 'CrossZip-WindowsTest.zip') -DestinationPath $out
+            & (Join-Path $scenario 'Verify-Windows.ps1') -ExtractedPath $out -Extractor 'Windows PowerShell Expand-Archive (CI; not Explorer)'
+          }
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: windows-powershell-results
+          path: acceptance/**/windows-result.json
+          if-no-files-found: error

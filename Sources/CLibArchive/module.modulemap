@@ -1,0 +1,4 @@
+module CLibArchive [system] {
+    header "shim.h"
+    export *
+}
