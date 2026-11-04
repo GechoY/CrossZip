@@ -3,6 +3,7 @@
 ## 1.5.2
 
 - 修复 TAR 第一个文件名以 `PK` 开头时误判为 ZIP，补充 TAR 与空 ZIP/ZIP64 回归。
+- 修复较早 Swift 工具链中 `main.swift` 与 `@main` 冲突，应用入口改为 `CrossZipApp.swift`。
 - 移除未使用的内部属性，更新多格式命令行报错文字。
 - 补齐 MIT 许可证、公开使用说明、干净构建与独立验证流程。
 - 新增 GitHub Actions 配置及 DMG / ZIP / SHA-256 发布包脚本；未实际运行的远程检查不标记通过。
