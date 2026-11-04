@@ -10,3 +10,5 @@ Vendor/Native/
 *.xcuserstate
 __pycache__/
 *.pyc
+/AUDIT.md
+/TESTING.md
